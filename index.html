@@ -405,7 +405,27 @@ $$('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset
 $('#menuButton').addEventListener('click',()=>{const nav=$('#nav');const open=!nav.classList.contains('open');nav.classList.toggle('open',open);$('#menuButton').setAttribute('aria-expanded',open?'true':'false')});
 $$('#nav a').forEach(a=>a.addEventListener('click',()=>$('#nav').classList.remove('open')));
 const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.14});$$('.reveal').forEach(el=>io.observe(el));
-$('#contactForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const subject=encodeURIComponent('Crossmedia inquiry');const body=encodeURIComponent(`Nume: ${f.get('name')||''}\nCompanie: ${f.get('company')||''}\nEmail: ${f.get('email')||''}\n\n${f.get('message')||''}`);window.location.href=`mailto:team@crossmc.ro?subject=${subject}&body=${body}`;});
+const contactForm=$('#contactForm');
+contactForm.action='https://formspree.io/f/xdeoddwd';contactForm.method='POST';
+['name','email','message'].forEach(n=>contactForm.elements.namedItem(n).required=true);
+const contactStatus=contactForm.querySelector('.demo-note');
+contactStatus.setAttribute('role','status');contactStatus.setAttribute('aria-live','polite');
+function setContactStatus(ro,en){contactStatus.dataset.ro=ro;contactStatus.dataset.en=en;contactStatus.textContent=lang==='ro'?ro:en;}
+setContactStatus('Mesajul este transmis prin Formspree către echipa Crossmedia.','Your message is sent via Formspree to the Crossmedia team.');
+let contactSending=false;
+contactForm.addEventListener('submit',async e=>{
+  e.preventDefault();if(contactSending || !contactForm.reportValidity())return;
+  contactSending=true;const button=contactForm.querySelector('button[type="submit"]');button.disabled=true;
+  setContactStatus('Se trimite mesajul…','Sending your message…');
+  const data=new FormData(contactForm);data.append('_subject','Crossmedia inquiry');
+  try{
+    const response=await fetch(contactForm.action,{method:'POST',body:data,headers:{Accept:'application/json'}});
+    if(!response.ok)throw new Error('Submission rejected');
+    contactForm.reset();setContactStatus('Mesaj trimis cu succes. Mulțumim!','Message sent successfully. Thank you!');
+  }catch(error){
+    setContactStatus('Nu am putut confirma trimiterea. Textul a fost păstrat. Încearcă din nou sau scrie la team@crossmc.ro.','We could not confirm delivery. Your text has been kept. Try again or email team@crossmc.ro.');
+  }finally{contactSending=false;button.disabled=false;}
+});
 
 const cursorDot=$('#cursorDot'),cursorLabel=$('#cursorLabel');
 let cursorX=0,cursorY=0,rafCursor=null;
