@@ -285,6 +285,12 @@
 .hero-actions .btn.ghost:hover{background:#e85b00;border-color:#e85b00;box-shadow:0 10px 28px rgba(255,100,0,.34)}
 .hero-actions .btn.ghost:focus-visible{outline:3px solid #fff;outline-offset:5px}
 </style>
+<style>
+/* Keep the graph line behind the video hidden throughout its entrance and exit. */
+.hero-signal:has(.signal-video:is(.is-opening,.is-playing,.is-closing))::after{visibility:hidden}
+.footer .ai-credit{display:block;width:max-content;margin:12px 0 0 auto;color:#ff9957;font-size:12px;font-weight:700;letter-spacing:.08em;text-decoration:none}
+@media(max-width:640px){.footer .ai-credit{margin-left:0}}
+</style>
 </head>
 <body>
 <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
@@ -514,6 +520,18 @@ const requestedSiteLang=new URLSearchParams(window.location.search).get('lang');
 applyLang(requestedSiteLang==='ro'?'ro':'en');
 
 
+</script>
+<script>
+(() => {
+  const corner = document.querySelector('.footer-inner > div:last-child');
+  if (!corner) return;
+  const credit = document.createElement('span');
+  credit.className = 'ai-credit';
+  credit.textContent = 'AI ✧';
+  credit.title = 'Logo animation created with AI / Animație logo realizată cu AI';
+  credit.setAttribute('aria-label', credit.title);
+  corner.appendChild(credit);
+})();
 </script>
 </body>
 </html>
