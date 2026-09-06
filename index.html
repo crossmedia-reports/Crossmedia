@@ -305,10 +305,10 @@
 <a data-en="Services" data-ro="Servicii" href="#servicii">Servicii</a>
 <a data-en="Experience" data-ro="Experiență" href="#clienti">Experiență</a>
 <a data-en="Contact" data-ro="Contact" href="#contact">Contact</a>
-<a class="nav-cta-mobile" data-en="Intelligence Platform ↗" data-ro="Platformă de intelligence ↗" href="rapoarte.html" target="_blank" rel="noopener">Platformă de intelligence ↗</a>
+<a class="nav-cta-mobile" data-en="Intelligence Platform ↗" data-ro="Platformă de intelligence ↗" href="intelligence.html" target="_blank" rel="noopener">Platformă de intelligence ↗</a>
 </nav>
 <div class="header-actions">
-<a class="nav-cta" data-en="Intelligence Platform ↗" data-ro="Platformă de intelligence ↗" href="rapoarte.html" target="_blank" rel="noopener">Platformă de intelligence ↗</a>
+<a class="nav-cta" data-en="Intelligence Platform ↗" data-ro="Platformă de intelligence ↗" href="intelligence.html" target="_blank" rel="noopener">Platformă de intelligence ↗</a>
 <div aria-label="Language selector" class="lang"><button data-lang="ro" type="button">RO</button><button class="active" data-lang="en" type="button">EN</button></div>
 </div>
 </div>
@@ -372,7 +372,7 @@
 <h3 data-en="Intelligence Platform" data-ro="Platformă de intelligence">Platformă de intelligence</h3>
 <p data-en="Opens in a new tab. Access is by personal account — username and password — issued per client, so reports stay confidential." data-ro="Se deschide într-un tab nou. Accesul se face cu cont personal — utilizator și parolă — alocat fiecărui client, astfel încât rapoartele rămân confidențiale.">Se deschide într-un tab nou. Accesul se face cu cont personal — utilizator și parolă — alocat fiecărui client, astfel încât rapoartele rămân confidențiale.</p>
 </div>
-<a class="btn primary" data-cursor="Intelligence" data-en="Open Intelligence Platform ↗" data-ro="Deschide platforma de intelligence ↗" href="rapoarte.html" rel="noopener" target="_blank">Deschide platforma de intelligence ↗</a>
+<a class="btn primary" data-cursor="Intelligence" data-en="Open Intelligence Platform ↗" data-ro="Deschide platforma de intelligence ↗" href="intelligence.html" rel="noopener" target="_blank">Deschide platforma de intelligence ↗</a>
 </div>
 </section>
 <section class="section" id="contact">
@@ -422,7 +422,7 @@ function buildHeroTitle(){
   });
 }
 function syncReportPortalLinks(){
-  $$('a[href^="rapoarte.html"]').forEach(link=>{link.href=`rapoarte.html?lang=${lang}`});
+  $$('a[href^="intelligence.html"]').forEach(link=>{link.href=`intelligence.html?lang=${lang}`});
 }
 function applyLang(next){lang=next;document.documentElement.lang=lang;$$('[data-ro][data-en]').forEach(el=>{if(el.dataset[lang].includes('<span')){el.innerHTML=el.dataset[lang]}else{el.textContent=el.dataset[lang]}});buildHeroTitle();$$('[data-ro-placeholder][data-en-placeholder]').forEach(el=>{el.placeholder=el.dataset[lang+'Placeholder']});$$('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));syncReportPortalLinks();renderMarquee(lang);const yearEl=$('#year');if(yearEl)yearEl.textContent=new Date().getFullYear();}
 $$('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
